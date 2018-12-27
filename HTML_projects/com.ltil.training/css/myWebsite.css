@@ -1,0 +1,24 @@
+/*for nav bar*/
+#navbar{    
+    list-style: none;
+    padding: 5px;  
+    color: white;
+}
+#navbar :hover{
+    background: bisque;
+    font-size: 20px;
+    color: black;
+ }
+ ul div{    
+    background: black;
+    border: 1px solid black;
+    width: fit-content;
+    display: unset;
+    padding: 4px 20px;
+    font-family: monospace;
+}
+
+/* Crousel Image*/
+.crsl{
+    height : 500px !important;
+}

@@ -1,0 +1,56 @@
+#div1{
+    width: 75px;
+    height: 75px;
+    background-color: cadetblue;
+    display: none;
+}
+
+#div2{
+    width: 75px;
+    height: 75px;
+    background-color: chartreuse;
+    display: none;
+}
+
+#div3{
+    width: 75px;
+    height: 75px;
+    background-color: coral;
+    display: none;
+}
+
+
+#div4{
+    width: 75px;
+    height: 75px;
+    background-color:orange;
+    display: block;
+}
+
+#div5{
+    width: 75px;
+    height: 75px;
+    background-color:blue;
+    display: block;
+}
+
+#div6{
+    width: 75px;
+    height: 75px;
+    background-color:green;
+    display: block;
+}
+
+#animadiv{
+    width: 400px;
+    height: 300px;
+    left: 50px;    
+    background-color: blueviolet;
+}
+
+.green{
+    border: 5px solid green;
+    color: red;
+    background-color: white;
+    text-align: center;
+}
