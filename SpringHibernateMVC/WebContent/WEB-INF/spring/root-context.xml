@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components 
+		application level configuration -->
+	<!-- DataSource configuration for Database Connection -->
+	<!-- Configuring DataSource with the help of class DriverManagerDataSource -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url"
+			value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="hr" />
+		<property name="password" value="hr" />
+	</bean>
+	<!-- Hibernate Integartion with Spring with the help of spring framework 
+		hibernate class LocalSessionFactoryBean -->
+	<!-- Hibernate 4 SessionFactory Bean definition -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />                                                                                                                                                                                                                                            
+		<property name="annotatedClasses">
+			<!-- Map all the annotated class with @Entity -->
+			<list>
+				<value>com.lti.mvc.model.Person</value>
+				<value>com.lti.mvc.model.EmployeeDetails</value>
+				<value>com.lti.mvc.model.Department</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect
+				</prop>
+
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- @Repository -->
+	<bean id="personDao" class="com.lti.mvc.daoIml.PersonDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- @Service -->
+	<bean id="personService"
+		class="com.lti.mvc.service.PersonServiceImpl">
+		<property name="personDao" ref="personDao"></property>
+	</bean>  
+	
+	
+	
+	<!-- Enables springframework Hibernate Transactions -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!-- This bean will handle all transaction within an application -->
+
+	<!-- This is required to handle transactions via Annotations like @Transactional -->
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+</beans>

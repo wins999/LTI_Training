@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+ 
+
+	<!-- The definition of the Root Spring Container shared by all Servlets 
+		and Filters -->
+	<context-param>
+		<!--Step 1: ServletContext initialization parameter -->
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+		<!-- application level configuration -->
+	</context-param>
+
+	<!--Step 1: Creates the Spring Container \ shared by all Servlets and Filters -->
+	<!--Step 2:configuring the ContextLoaderListener loads the context-param 
+		init-param values(root-context.xml) -->
+	<!-- Processes application requests -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+
+	<!--Step 3: Configuring DispatcherServlet -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!--Step 4: Configuring initialization parameter for ServletConfig (servlet-context.xml) -->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+		<!--Step 5: load the DispatcherServlet first at the time of loading the 
+			web app -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<!--Step 6:url-pattern which is published name of the web app ...'/' means 
+			it will handle all request -->
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	<!-- Step 7: Application level Exception Handler -->
+	<!-- This will catch Http 500 error -->
+	<error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/views/error.jsp</location>
+	</error-page>
+
+	<!-- This will catch any exception -->
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/WEB-INF/views/error.jsp</location>
+	</error-page>
+	<!-- This will catch Http 404 error -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/views/error.jsp</location>
+	</error-page>
+</web-app>
